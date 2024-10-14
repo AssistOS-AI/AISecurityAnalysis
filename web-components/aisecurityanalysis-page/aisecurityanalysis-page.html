@@ -1,1 +1,55 @@
-<div>$$insertedText</div>
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>AISecurityAnalysis - Home</title>
+</head>
+<body>
+<h1>AISecurityAnalysis - Home</h1>
+<form id="security-analysis-form">
+    <label for="project-name">Project Name</label>
+    <input type="text" id="project-name" name="project-name" placeholder="Enter your project name" required>
+
+    <label for="github-link">GitHub Repo Link</label>
+    <input type="url" id="github-link" name="github-link" placeholder="Enter GitHub repository link" required>
+
+    <label for="project-prompt">Prompt</label>
+    <textarea id="project-prompt" name="project-prompt" placeholder="Describe your project and requirements..." required></textarea>
+
+    <div class="button-container">
+        <button type="button" onclick="submitForm()">Analyze Project</button>
+    </div>
+</form>
+
+<!-- Sidebar-ul pentru navigare -->
+<div class="sidebar">
+    <ul>
+        <li><a href="#" id="nav-home">Home</a></li>
+        <li><a href="#" id="nav-files">Generated Files</a></li>
+        <li><a href="#" id="nav-compare">Compare Files</a></li>
+    </ul>
+</div>
+
+<!-- Paginile secundare -->
+<div class="main-content" id="page-files" style="display:none;">
+    <h1>Generated Files</h1>
+    <p>List of generated project files will appear here.</p>
+    <div class="button-container">
+        <button type="button">Create New Project</button>
+        <button type="button">Upload Project</button>
+    </div>
+</div>
+
+<div class="main-content" id="page-compare" style="display:none;">
+    <h1>Compare Files</h1>
+    <p>Select two project versions to compare:</p>
+    <div class="button-container">
+        <button type="button">Compare Selected Files</button>
+    </div>
+</div>
+
+<script src="aisecurityanalysis-page.js"></script>
+</body>
+</html>
