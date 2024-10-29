@@ -1,37 +1,55 @@
-const llmModule = require("assistos").loadModule("llm", {});  // Import modulul necesar
+const assistOSSDK = require("assistos")
+const applicationModule = require('assistos').loadModule('application', {});
 
 export class AISecurityAnalysisPage {
     constructor(element, invalidate) {
         this.element = element;
         this.invalidate = invalidate;
         this.invalidate();
+        this.documentId = this.element.getAttribute("data-documentId")
+
+    }
+
+    saveProject() {
+        // const llmmodule = assistOSSDK.loadModule("llm")
+        alert("Project Saved Successfully!");
+
     }
 
     async beforeRender() {
-        this.insertedText = "Dummy Text";
+        
     }
 
     async afterRender() {
 
     }
 
-    async analyzeProject(_target) {
-        const formData = await assistOS.UI.extractFormInformation(_target);
-        if (!formData.isValid) {
-            return assistOS.UI.showApplicationError("Invalid form data", "Please fill all the required fields", "error");  // Validare date
-        }
-        const projectData = formData.data;
-        const prompt =
-            `Analyze a project with name ${projectData["project-name"]}. 
-             GitHub repository: ${projectData["github-link"]}. 
-             Details: ${projectData["project-prompt"]}`;
+    async saveProject1 (_target){
 
-        const reqData = {
-            modelName: "GPT-4o",
-            prompt: prompt
+        try {
+            await assistOS.loadifyFunction(async () => {
+                const bookGenerationData = {
+                    llm: "ChatGPT",
+                    size: 1500,
+                    documentId: this.documentId
+                };
+
+                const response = await applicationModule.runApplicationFlow(
+                    assistOS.space.id,
+                    "AISecurity",
+                    "GenerateTemplate",
+                    bookGenerationData
+                );
+
+                const documentId = response.data;
+                await assistOS.UI.changeToDynamicPage(
+                    `space-application-page`,
+                    `${assistOS.space.id}/Space/document-view-page/${documentId}`
+                );
+            });
+        } catch (error) {
+            console.error("Error while saving the project:", error);
+            alert(`Error: ${error.message || "Unknown error occurred"}`);
         }
-        const llmResponse = await llmModule.sendLLMRequest(reqData);
-        const analysisResult = llmResponse.messages;
-        console.log(analysisResult);
     }
 }
