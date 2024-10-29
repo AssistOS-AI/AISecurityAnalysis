@@ -24,7 +24,7 @@ export class AISecurityAnalysisPage {
 
     }
 
-    async saveProject1 (_target){
+    async submitForm (_target){
 
         try {
             await assistOS.loadifyFunction(async () => {
