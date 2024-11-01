@@ -30,15 +30,22 @@ export class AISecurityAnalysisPage {
             await assistOS.loadifyFunction(async () => {
                 const bookGenerationData = {
                     llm: "ChatGPT",
-                    size: 1500,
+                    size: 2,
                     documentId: this.documentId
                 };
+
+                const formElement = this.element.querySelector("form");
+                const formData = await assistOS.UI.extractFormInformation(formElement);
+                if (!formData.isValid) {
+                    return assistOS.UI.showApplicationError("Invalid form data", "Please fill all the required fields", "error");
+                }
+                const planData = formData.data;
 
                 const response = await applicationModule.runApplicationFlow(
                     assistOS.space.id,
                     "AISecurity",
                     "GenerateTemplate",
-                    bookGenerationData
+                    planData
                 );
 
                 const documentId = response.data;
