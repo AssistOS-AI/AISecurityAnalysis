@@ -22,7 +22,7 @@ export class AISecurityAnalysisPage {
         const printButton = document.getElementById('print-button');
         if (printButton) {
             printButton.addEventListener('click', function () {
-                window.print(); // Deschide dialogul de imprimare
+                window.print(); // fereastra noua imprimare din jspdf !!!! -> nu il deschide pe al meu
             });
         }
     }
@@ -33,7 +33,7 @@ export class AISecurityAnalysisPage {
                 const formElement = this.element.querySelector("form");
                 const formData = await assistOS.UI.extractFormInformation(formElement);
 
-                // verif date formularului sunt valide
+                // verif date formular sunt valide
                 if (!formData.isValid) {
                     return assistOS.UI.showApplicationError("Invalid form data", "Please fill all the required fields", "error");
                 }
@@ -43,8 +43,8 @@ export class AISecurityAnalysisPage {
                 // Ruleaza fluxul de generare pentru proiect
                 const response = await applicationModule.runApplicationFlow(
                     assistOS.space.id,
-                    "AISecurity",
-                    "GenerateTemplate",
+                    "AISecurityAnalysis",
+                    "GenerateTemplateSecurity",
                     planData
                 );
 
